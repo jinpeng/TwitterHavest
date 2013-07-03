@@ -19,12 +19,18 @@ def login():
     APP_NAME = config.get('account', 'appname')
     CONSUMER_KEY = config.get('account', 'consumerkey')
     CONSUMER_SECRET = config.get('account', 'consumersecret')
+    ACCESS_TOKEN = config.get('account', 'accesstoken')
+    ACCESS_TOKEN_SECRET = config.get('account', 'accesstokensecret')
     TOKEN_FILE = 'out/twitter.oauth'
 
     try:
         (oauth_token, oauth_token_secret) = read_token_file(TOKEN_FILE)
     except IOError, e:
-        (oauth_token, oauth_token_secret) = oauth_dance(APP_NAME, CONSUMER_KEY,
+        if ACCESS_TOKEN != None and ACCESS_TOKEN_SECRET != None:
+            oauth_token = ACCESS_TOKEN
+            oauth_token_secret = ACCESS_TOKEN_SECRET
+        else:
+            (oauth_token, oauth_token_secret) = oauth_dance(APP_NAME, CONSUMER_KEY,
                 CONSUMER_SECRET)
 
         if not os.path.isdir('out'):

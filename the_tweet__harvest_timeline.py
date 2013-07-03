@@ -56,7 +56,7 @@ filename = 'tweets-%s-timeline' % (TIMELINE_NAME, )
 if USER:
     filename = '%s-%s' % (filename, USER)
 
-f = file(filename, 'wb')
+f = file('out/' + filename, 'wb')
 
 api_call = getattr(t.statuses, TIMELINE_NAME + '_timeline')
 tweets = makeTwitterRequest(api_call, **KW)

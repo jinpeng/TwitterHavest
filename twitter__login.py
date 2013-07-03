@@ -2,6 +2,7 @@
 
 import os
 import twitter
+import ConfigParser
 
 from twitter.oauth import write_token_file, read_token_file
 from twitter.oauth_dance import oauth_dance
@@ -9,12 +10,15 @@ from twitter.oauth_dance import oauth_dance
 
 def login():
 
+    config = ConfigParser.ConfigParser()
+    config.readfp(open("twitter.config","rb"))
+
     # Go to http://twitter.com/apps/new to create an app and get these items
     # See also http://dev.twitter.com/pages/oauth_single_token
 
-    APP_NAME = ''
-    CONSUMER_KEY = ''
-    CONSUMER_SECRET = ''
+    APP_NAME = config.get('account', 'appname')
+    CONSUMER_KEY = config.get('account', 'consumerkey')
+    CONSUMER_SECRET = config.get('account', 'consumersecret')
     TOKEN_FILE = 'out/twitter.oauth'
 
     try:
